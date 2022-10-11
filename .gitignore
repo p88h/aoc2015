@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+day*
+!day*.cc
+!day*.in
+
+.vscode

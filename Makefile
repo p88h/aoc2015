@@ -2,7 +2,7 @@ CXX := clang++
 SRCS := $(wildcard day*.cc)
 OBJS := $(SRCS:.cc=.o)
 EXES := $(SRCS:.cc=)
-CXXFLAGS := -std=c++11 -O -g
+CXXFLAGS := -std=c++11 -O -g -Wall
 
 all: $(EXES)
 

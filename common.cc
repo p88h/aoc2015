@@ -30,3 +30,18 @@ string handle_input1(const string &prefix) {
     buffer << in.rdbuf();
     return buffer.str();
 }
+
+vector<string> split_str(const string &s, char delim) {
+  vector<string> ret;
+  string t;
+  for (char c: s) {
+    if (c != delim) {
+      t += c;
+    } else {
+      if (t.length()) ret.push_back(t);
+      t.clear();
+    }
+  }
+  if (t.length()) ret.push_back(t);
+  return ret;
+}

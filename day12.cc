@@ -1,5 +1,5 @@
-#include <cstring>
 #include <cassert>
+#include <cstring>
 #include <iostream>
 
 #include "common.h"
@@ -10,29 +10,29 @@ struct Node {
     int value;
     string str;
     vector<string> labels;
-    vector<Node*> children;
+    vector<Node *> children;
     bool red;
 };
 
-void jump_skip_spaces(string str, int *pos, int hop=1) {
-    (*pos)+=hop;
+void jump_skip_spaces(string str, int *pos, int hop = 1) {
+    (*pos) += hop;
     while (str[*pos] == ' ') (*pos)++;
 }
 
-string parse_string(string str, int *pos) {    
+string parse_string(string str, int *pos) {
     int start = *pos + 1;
     int end = *pos + 2;
     while (str[end] != '"') end++;
-    string t = str.substr(start,end-start);
+    string t = str.substr(start, end - start);
     *pos = end;
     jump_skip_spaces(str, pos);
     return t;
 }
 
-Node* parse(string str, int *pos) {
+Node *parse(string str, int *pos) {
     Node *tmp = new Node();
     if (str[*pos] == '"') {
-        tmp->str = parse_string(str, pos);        
+        tmp->str = parse_string(str, pos);
         return tmp;
     }
     // array
@@ -60,8 +60,8 @@ Node* parse(string str, int *pos) {
     }
     // must be a number then
     char *end;
-    tmp->value=strtol(str.c_str()+*pos, &end, 10);
-    *pos = end-str.c_str();
+    tmp->value = strtol(str.c_str() + *pos, &end, 10);
+    *pos = end - str.c_str();
     jump_skip_spaces(str, pos, 0);
     return tmp;
 }
@@ -79,15 +79,15 @@ int sum_numbers(Node *top, bool filter_red) {
 void print(Node *top, string indent) {
     if (!top->labels.empty()) {
         cout << indent << "OBJECT>  " << endl;
-        for (size_t i = 0; i < top->labels.size();++i) {
+        for (size_t i = 0; i < top->labels.size(); ++i) {
             cout << indent << top->labels[i] << "=" << endl;
             print(top->children[i], indent + "  ");
-        }        
+        }
     } else if (!top->children.empty()) {
         cout << indent << "ARRAY:  " << top->str << endl;
         for (Node *child : top->children) {
             print(child, indent + "  ");
-        }        
+        }
     } else if (!top->str.empty()) {
         cout << indent << "STR:  " << top->str << endl;
     } else {
@@ -98,7 +98,7 @@ void print(Node *top, string indent) {
 int main() {
     string s = handle_input1("day12");
     int p = 0;
-    Node *root= parse(s, &p);
+    Node *root = parse(s, &p);
     cout << sum_numbers(root, false) << endl;
     cout << sum_numbers(root, true) << endl;
     return 0;

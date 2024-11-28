@@ -19,7 +19,7 @@ class Wire {
 
   public:
     Wire(int num) : name{to_string(num)}, cached{true}, value{num} {}
-    Wire(string label) : name{move(label)}, cached{false} {}
+    Wire(string label) : name{std::move(label)}, cached{false} {}
     const string &label() { return name; }
     void connect(Gate *gate) { input = gate; }
     void reset() {
@@ -43,7 +43,7 @@ class BinaryGate : public Gate {
     string name;
 
   public:
-    BinaryGate(Wire *l, Wire *r, string label) : left{l}, right{r}, name{move(label)} {}
+    BinaryGate(Wire *l, Wire *r, string label) : left{l}, right{r}, name{std::move(label)} {}
     virtual ~BinaryGate() {}
     virtual int eval() {
         int lv = left->eval();
